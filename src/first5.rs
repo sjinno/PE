@@ -25,6 +25,20 @@ pub fn even_fib_numbers(bound: u64) -> u64 {
         .sum::<u64>()
 }
 
-pub fn largest_prime_factor(num: u32) -> u32 {
-    0
+pub fn largest_prime_factor(mut num: u64) -> u64 {
+    (2..)
+        .scan(2, |_, x| {
+            while num % x == 0 {
+                println!("{}", x);
+                num /= x;
+            }
+            if num != 1 {
+                Some(x)
+            } else {
+                None
+            }
+        })
+        .last()
+        .unwrap()
+        + 1
 }
