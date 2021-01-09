@@ -24,3 +24,7 @@ pub fn even_fib_numbers(bound: u64) -> u64 {
         .filter(|n| n % 2 == 0)
         .sum::<u64>()
 }
+
+pub fn largest_prime_factor(num: u32) -> u32 {
+    0
+}
