@@ -1,6 +1,5 @@
 use std::cmp::Ordering::*;
 
-// Ah... Probably I should use BigUint...
 pub fn largest_product_in_a_series(n: u8) -> u64 {
     let filename = "inputs/input8.txt";
     let lines = readfile!(filename);
@@ -8,22 +7,36 @@ pub fn largest_product_in_a_series(n: u8) -> u64 {
     // for line in lines.iter() {
     //     println!("{}", line);
     // }
-    let length = lines[0].len();
-    // println!("{}", length);
+    let oneline = lines.join("");
+    let length = oneline.len();
+    println!("{}", length);
+    let mut largest = 0;
     match length.cmp(&(n as usize)) {
         Less => println!("The input size should not be smaller than n."),
-        Equal => {
-            let mut v = Vec::new();
-            lines.iter().for_each(|line| {
-                let product = line
-                    .chars()
-                    .into_iter()
-                    .fold(1, |acc, x| acc * x.to_digit(10).unwrap());
-                v.push(product);
-            });
-            return (*v.iter().max().unwrap()).into();
+        _ => {
+            let vec = series(&oneline, n as usize, length);
+            for v in &vec {
+                if !v.chars().into_iter().any(|c| c == '0') {
+                    let tmp = v
+                        .chars()
+                        .into_iter()
+                        .fold(1, |acc, x| acc * (x as u64 - 48));
+                    if tmp > largest {
+                        println!("{:?} ===> {}", v, tmp);
+                        largest = tmp;
+                    }
+                }
+            }
         }
-        _ => {}
     }
-    0
+    largest
+}
+
+fn series(digits: &str, len: usize, length: usize) -> Vec<String> {
+    (0..length + 1 - len)
+        .scan(0, |_, x| {
+            let num = digits.get(x..x + len).unwrap();
+            Some(num.to_string())
+        })
+        .collect::<Vec<String>>()
 }

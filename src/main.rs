@@ -11,5 +11,5 @@ fn main() {
     // println!("{}", first_5::largest_prime_factor(600_851_475_143));
 
     // 6 - 10
-    println!("{}", six_10::largest_product_in_a_series(50));
+    println!("{}", six_10::largest_product_in_a_series(13));
 }
