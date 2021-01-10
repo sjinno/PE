@@ -41,3 +41,36 @@ fn series(digits: &str, len: usize, length: usize) -> Vec<String> {
         })
         .collect::<Vec<String>>()
 }
+
+#[allow(dead_code)]
+// Pythagorean triplets: a^2 + b^2 = c^2 where a < b < c.
+// Find triplets that satisfies a + b + c = 1000
+// and the product of them.
+// To begin with, a^2 + b^2 - c^2 = 0
+//            => (a + b)^2 - c^2 = 2ab
+//            => (a + b + c)(a + b - c) = 2ab.
+// And in this case, replacing (a + b + c) with 1000, we have a + b = ab/500 + c.
+// Hence, we want to find triplets `a, b, c` that satisfy:
+// 1. ab is divisible by 500,
+// 2. a + b = (ab/500) + c,
+// 3. a + b + c = 1000.
+// Return 0 if no such triplets.
+pub fn special_pythagorean_triplet(target: u64) -> u64 {
+    let divisor = target / 2;
+    for a in 1..1000 {
+        for b in a + 1..1000 {
+            let ab = a * b;
+            if (ab) % divisor == 0 {
+                let div = ab / divisor;
+                for c in b + 1..1000 {
+                    let addition = a + b;
+                    if addition == div + c && a + b + c == target {
+                        println!("a = {}\nb = {}\nc = {}git ", a, b, c);
+                        return ab as u64 * c as u64;
+                    }
+                }
+            }
+        }
+    }
+    0
+}
