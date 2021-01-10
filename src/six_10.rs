@@ -1,5 +1,6 @@
 use std::cmp::Ordering::*;
 
+#[allow(dead_code)]
 pub fn largest_product_in_a_series(n: u8) -> u64 {
     let filename = "inputs/input8.txt";
     let lines = readfile!(filename);
@@ -34,7 +35,7 @@ pub fn largest_product_in_a_series(n: u8) -> u64 {
 
 fn series(digits: &str, len: usize, length: usize) -> Vec<String> {
     (0..length + 1 - len)
-        .scan(0, |_, x| {
+        .scan("".to_string(), |_, x| {
             let num = digits.get(x..x + len).unwrap();
             Some(num.to_string())
         })
