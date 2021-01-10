@@ -47,6 +47,28 @@ pub fn largest_prime_factor(mut num: u64) -> u64 {
 }
 
 #[allow(dead_code)]
-pub fn largest_palindrome_product(digits: usize) -> u64 {
-    0
+pub fn largest_palindrome_product(digits: usize, top_n_largest: usize) -> u64 {
+    let from = 10usize.pow(digits as u32 - 1);
+    let to = 10usize.pow(digits as u32);
+    let mut count = 0;
+    let mut largest = 0;
+    for i in (from..to).rev() {
+        for j in (i..to).rev() {
+            let tmp = i * j;
+            let num = tmp.to_string();
+            let rev_num: String = num.chars().rev().collect();
+            if num == rev_num {
+                if tmp > largest {
+                    largest = tmp;
+                }
+                println!("{} * {} ===> {}", i, j, num);
+                count += 1;
+                break;
+            }
+        }
+        if count == top_n_largest {
+            break;
+        }
+    }
+    largest as u64
 }
